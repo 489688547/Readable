@@ -1,0 +1,26 @@
+.App {
+  text-align: center;
+}
+
+.post {
+  text-align: left;
+  margin: 10px;
+}
+
+.post_subtitle {
+  text-align: center;
+  font-size: 10px;
+}
+
+.nav {
+  margin-bottom: 10px;
+}
+
+.nav-item {
+  margin-right: 30px;
+}
+
+.vote {
+  display: inline;
+  margin-left: 5%;
+}
