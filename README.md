@@ -5,11 +5,7 @@
 Readable is a web application using the state management of Redux and React.
 It is the second project for Udacity's React Nanoderee
 
-<<<<<<< HEAD
-In Readable, users can post content to by categories and comment on everyone's posts. Also, users can vote on posts and comments.
-=======
 In Readable, users can post content to by categories and comment on everyone's posts. Also, users can vote on posts and comments. 
->>>>>>> 8672071871951b1091fe1f9e38a8cafe5eaf8b5c
 Users sort posts by time and score.
 
 
