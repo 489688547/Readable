@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import NotFound from './NotFound'
 import '../App.css'
 import { connect } from 'react-redux'
 import { getPost, updatePost } from '../actions/posts'
@@ -27,22 +28,22 @@ class EditPost extends Component {
    }
  }
 
-  handleUsernameChange (event) {
+  handleUsernameChange = (event) => {
     this.setState({
       author: event.target.value
     })
   }
-  handleTitleChange (event) {
+  handleTitleChange = (event) => {
     this.setState({
       title: event.target.value
     })
   }
-  handleBodyChange (event) {
+  handleBodyChange = (event) => {
     this.setState({
       body: event.target.value
     })
   }
-  handleCategoryChange (event) {
+  handleCategoryChange = (event) => {
     this.setState({
       category: event.target.value
     })
@@ -62,22 +63,23 @@ class EditPost extends Component {
 
     return (
       <div className='post'>
+        {post.deleted === false?
         <Form>
           <FormGroup>
             <Label for='name'>Name: </Label>
-            <Input value={this.state.author} onChange={this.handleUsernameChange.bind(this)}/>
+            <Input value={this.state.author} onChange={this.handleUsernameChange}/>
           </FormGroup>
           <FormGroup>
             <Label for='title'>Title: </Label>
-            <Input value={this.state.title} onChange={this.handleTitleChange.bind(this)}/>
+            <Input value={this.state.title} onChange={this.handleTitleChange}/>
           </FormGroup>
           <FormGroup>
             <Label for='body'>Body:</Label>
-            <Input value={this.state.body} type='textarea' onChange={this.handleBodyChange.bind(this)}/>
+            <Input value={this.state.body} type='textarea' onChange={this.handleBodyChange}/>
           </FormGroup>
           <FormGroup>
             <Label for='category'>Category</Label>
-            <Input type='select' value={this.state.category} onChange={this.handleCategoryChange.bind(this)} >
+            <Input type='select' value={this.state.category} onChange={this.handleCategoryChange} >
               {categories.map(category => (
                 <option key={category.name}>
                   {category.name}
@@ -85,8 +87,9 @@ class EditPost extends Component {
               ))}
             </Input>
           </FormGroup>
-          <Button onClick={this.handleUpdate.bind(this)}>Update</Button>
+          <Button onClick={this.handleUpdate}>Update</Button>
         </Form>
+        : <NotFound/>}
       </div>
     )
   }

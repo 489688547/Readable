@@ -6,7 +6,7 @@ import PostCard from './PostCard'
 import arraySort from 'array-sort';
 
 class PostList extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.getPosts();
   }
 

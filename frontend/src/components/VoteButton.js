@@ -6,37 +6,36 @@ import { voteComment } from '../actions/comments'
 import TiThumbsUp from 'react-icons/lib/ti/thumbs-up'
 import TiThumbsDown from 'react-icons/lib/ti/thumbs-down'
 
-class VoteButton extends Component {
-  handleVotePost (id, option) {
-    this.props.votePost(id, option);
+const VoteButton = (props) => {
+
+  const handleVotePost = (id, option) => {
+    props.votePost(id, option)
   }
 
-  handleVoteComment (id, option) {
-    this.props.voteComment(id, option);
+  const handleVoteComment = (id, option) => {
+    props.voteComment(id, option)
   }
 
-  render() {
-    const { data } = this.props
-    console.log(data)
-    return (
-      <div>
-        { data.category ?
-          <div className='vote'>
-            <TiThumbsUp size={25} onClick={() => this.handleVotePost(data.id, 'upVote')} />
-            <TiThumbsDown size={25} onClick={() => this.handleVotePost(data.id, 'downVote')}/>
+  const data = props.data
+
+  return (
+    <div>
+      { data.category ?
+        <div className='vote'>
+          <TiThumbsUp size={25} onClick={() => handleVotePost(data.id, 'upVote')} />
+          <TiThumbsDown size={25} onClick={() => handleVotePost(data.id, 'downVote')}/>
+          <span>Score:{data.voteScore}</span>
+        </div>
+        : <div className='vote'>
+            <TiThumbsUp size={25} onClick={() => handleVoteComment(data.id, 'upVote')} />
+            <TiThumbsDown size={25} onClick={() => handleVoteComment(data.id, 'downVote')}/>
             <span>Score:{data.voteScore}</span>
           </div>
-          : <div className='vote'>
-              <TiThumbsUp size={25} onClick={() => this.handleVoteComment(data.id, 'upVote')} />
-              <TiThumbsDown size={25} onClick={() => this.handleVoteComment(data.id, 'downVote')}/>
-              <span>Score:{data.voteScore}</span>
-            </div>
-        }
-      </div>
-
-    )
-  }
+      }
+    </div>
+  )
 }
+
 
 const mapDispatchToProps = { votePost, voteComment }
 

@@ -6,24 +6,19 @@ import Sort from './Sort'
 import CardActions from '@material-ui/core/CardActions';
 import Card from '@material-ui/core/Card';
 
-class HomePage extends Component {
-
-  render(){
-    return (
-      <div>
-        <Card >
-          <CardActions className='post'>
-            <Sort />
-            <AddPostButton />
-          </CardActions>
-        </Card>
-
-
-
-        <PostList />
-      </div>
-    )
-  }
+const HomePage = () => {
+  return (
+    <div>
+      <Card >
+        <CardActions className='post'>
+          <Sort />
+          <AddPostButton />
+        </CardActions>
+      </Card>
+      <PostList />
+    </div>
+  )
 }
+
 
 export default HomePage
