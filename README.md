@@ -1,8 +1,13 @@
-# Readable API Server
+# Readable
 
-This is the starter project for the final assessment project for Udacity's Redux course where you will build a content and comment web app. Users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
+# Description
 
-This repository includes the code for the backend API Server that you'll use to develop and interact with the front-end portion of the project.
+Readable is a web application using the state management of Redux and React.
+It is the second project for Udacity's React Nanoderee
+
+In Readable, users can post content to by categories and comment on everyone's posts. Also, users can vote on posts and comments.
+Users sort posts by time and score.
+
 
 ## Start Developing
 
