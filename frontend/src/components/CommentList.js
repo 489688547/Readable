@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { getComments } from '../actions/comments'
 import Comment from './Comment'
 import AddComment from './AddComment'
-
-import CardContent from '@material-ui/core/CardContent';
 
 class CommentList extends Component {
   componentWillMount() {

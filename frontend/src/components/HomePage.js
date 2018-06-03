@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react'
 import '../App.css'
-import AddPostButton from './AddPostButton'
 import PostList from './PostList'
 import Sort from './Sort'
 import CardActions from '@material-ui/core/CardActions';
@@ -12,7 +11,6 @@ const HomePage = () => {
       <Card >
         <CardActions className='post'>
           <Sort />
-          <AddPostButton />
         </CardActions>
       </Card>
       <PostList />

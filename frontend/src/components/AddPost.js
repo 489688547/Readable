@@ -81,7 +81,7 @@ class AddPost extends Component {
           <FormGroup>
             <Label for='category'>Category</Label>
             <Input type='select' onChange={this.handleCategoryChange.bind(this)} >
-              {this.props.categories.map(category => (
+              {categories.map(category => (
                 <option key={category.name}>
                   {category.name}
                 </option>

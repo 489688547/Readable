@@ -1,26 +1,37 @@
 import React, { Component } from 'react'
 import '../App.css'
 import { connect } from 'react-redux'
-import { removePost} from '../actions/posts'
+import { removePost, getPost } from '../actions/posts'
+import CommentList from './CommentList'
 import VoteButton from './VoteButton'
 import { Link } from 'react-router-dom'
+import AddPostButton from './AddPostButton'
 
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
+import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import CardActions from '@material-ui/core/CardActions';
 import Comment from '@material-ui/icons/Comment';
 import Badge from '@material-ui/core/Badge';
 
 
+
 class PostCard extends Component {
 
   state = {
+    expanded: false,
     anchorEl: null,
+  }
+
+  componentWillMount() {
+    this.props.getPost(this.props.match.params.post_id);
   }
 
   handleExpandClick = () => {
@@ -42,10 +53,11 @@ class PostCard extends Component {
   render() {
 
     const { post } = this.props
-    const { anchorEl} = this.state;
+    const { anchorEl, expanded } = this.state;
 
     return (
       <div>
+        <AddPostButton />
         <Card className='post' key={post.id}>
           <CardHeader
             action={
@@ -57,7 +69,6 @@ class PostCard extends Component {
             title={post.title}
             subheader= {`Created by ${post.author} at ${new Date(post.timestamp).toLocaleString()}`}
           />
-
           <Menu
             id='long-menu'
             anchorEl={anchorEl}
@@ -73,22 +84,34 @@ class PostCard extends Component {
               Delete
             </MenuItem>
           </Menu>
-          <Link to={`/${post.category}/${post.id}`} key={post.id} >
-            <CardContent>{ post.body }</CardContent>
-          </Link>
+
+          <CardContent>{ post.body }</CardContent>
           <CardActions >
             <VoteButton data={post}/>
             <Badge badgeContent={post.commentCount} color='secondary' style={style}><Comment/></Badge>
+            <IconButton onClick={this.handleExpandClick}>
+              {!expanded ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+            </IconButton>
           </CardActions>
+
+          <Collapse in={this.state.expanded} timeout='auto' unmountOnExit>
+            <CardContent>
+              <CommentList post={post}/>
+            </CardContent>
+          </Collapse>
         </Card>
       </div>
     )
   }
 }
 
-const mapDispatchToProps = { removePost }
+const mapStateToProps = state => ({
+  post: state.posts.post
+})
 
-export default connect(null, mapDispatchToProps)(PostCard)
+const mapDispatchToProps = { removePost, getPost }
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostCard)
 
 const style = {
     marginLeft: '85%',
