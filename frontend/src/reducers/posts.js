@@ -49,7 +49,8 @@ function posts (state = initialState, action) {
     case VOTE_POST:
       return {
         ...state,
-        posts: state.posts.map(p => (p.id === action.post.id? action.post: p))
+        posts: state.posts.map(p => (p.id === action.post.id? action.post: p)),
+        post: action.post
       }
 
     case UPDATEPOST:

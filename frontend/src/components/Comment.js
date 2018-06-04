@@ -12,16 +12,29 @@ import { Button, ButtonGroup } from 'reactstrap'
 
 class Comment extends Component {
   state = {
-    edit: false
+    edit: false,
+    body: this.props.comment.body,
   }
 
-  handleEditChange = () => {
-    this.setState({ edit: !this.state.edit })
+  handleEditChange = (event) => {
+    this.setState({
+      body: event.target.value,
+    })
   }
 
-  handleCommentUpdate = (comment) => {
-    this.props.updateComment(comment)
-    this.setState({ edit: !this.state.edit })
+  handleClick = () => {
+    this.setState({
+      edit: !this.state.edit,
+    })
+  }
+
+  handleCommentUpdate = () => {
+    const { body } = this.state
+    const { id } = this.props.comment
+    this.props.updateComment(id, body)
+    this.setState({
+      edit: !this.state.edit,
+    })
   }
 
   handleCommentDelete = (id) => {
@@ -30,17 +43,17 @@ class Comment extends Component {
 
   render() {
     const { comment } = this.props
-    const { edit } = this.state
+    const { edit, body } = this.state
     return (
       <div>
         <Card className='post'>
-          {edit? <Input fullWidth defaultValue={comment.body}/>
-            : <CardContent onClick={this.handleEditChange} >{comment.body}</CardContent>
+          {edit? <Input fullWidth value={body} onChange={this.handleEditChange.bind(this)}/>
+            : <CardContent onClick={this.handleClick.bind(this)} >{body}</CardContent>
           }
-          <CardActions>
+          <CardActions >
             <VoteButton className='votebutton' data={ comment } />
             <ButtonGroup style={style}>
-              <Button onClick={() => this.handleCommentUpdate(comment)}>Update</Button>
+              <Button onClick={() => this.handleCommentUpdate()}>Update</Button>
               <Button onClick={() => this.handleCommentDelete(comment.id)}>Delete</Button>
             </ButtonGroup>
           </CardActions>

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import NotFound from './NotFound'
 import '../App.css'
 import { connect } from 'react-redux'
 import { getPost, updatePost } from '../actions/posts'
@@ -7,7 +6,7 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 
 class EditPost extends Component {
   state = {
-    author: 'bob',
+    author: '',
     title: '',
     body: '',
     category: 'choose a category',
@@ -63,23 +62,22 @@ class EditPost extends Component {
 
     return (
       <div className='post'>
-        {post.deleted === false?
         <Form>
           <FormGroup>
             <Label for='name'>Name: </Label>
-            <Input value={this.state.author} onChange={this.handleUsernameChange}/>
+            <Input value={this.state.author} onChange={this.handleUsernameChange.bind(this)}/>
           </FormGroup>
           <FormGroup>
             <Label for='title'>Title: </Label>
-            <Input value={this.state.title} onChange={this.handleTitleChange}/>
+            <Input value={this.state.title} onChange={this.handleTitleChange.bind(this)}/>
           </FormGroup>
           <FormGroup>
             <Label for='body'>Body:</Label>
-            <Input value={this.state.body} type='textarea' onChange={this.handleBodyChange}/>
+            <Input value={this.state.body} type='textarea' onChange={this.handleBodyChange.bind(this)}/>
           </FormGroup>
           <FormGroup>
             <Label for='category'>Category</Label>
-            <Input type='select' value={this.state.category} onChange={this.handleCategoryChange} >
+            <Input type='select' value={this.state.category} onChange={this.handleCategoryChange.bind(this)} >
               {categories.map(category => (
                 <option key={category.name}>
                   {category.name}
@@ -87,9 +85,8 @@ class EditPost extends Component {
               ))}
             </Input>
           </FormGroup>
-          <Button onClick={this.handleUpdate}>Update</Button>
+          <Button onClick={this.handleUpdate.bind(this)}>Update</Button>
         </Form>
-        : <NotFound/>}
       </div>
     )
   }

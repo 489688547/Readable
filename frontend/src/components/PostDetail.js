@@ -6,6 +6,7 @@ import CommentList from './CommentList'
 import VoteButton from './VoteButton'
 import { Link } from 'react-router-dom'
 import AddPostButton from './AddPostButton'
+import NotFound from './NotFound'
 
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -20,8 +21,6 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import CardActions from '@material-ui/core/CardActions';
 import Comment from '@material-ui/icons/Comment';
 import Badge from '@material-ui/core/Badge';
-
-
 
 class PostCard extends Component {
 
@@ -48,6 +47,7 @@ class PostCard extends Component {
 
   handlePostDelete (id) {
     this.props.removePost(id);
+    this.props.history.push('/');
   }
 
   render() {
@@ -57,49 +57,53 @@ class PostCard extends Component {
 
     return (
       <div>
-        <AddPostButton />
-        <Card className='post' key={post.id}>
-          <CardHeader
-            action={
-              <IconButton aria-owns={anchorEl ? 'long-menu' : null} aria-haspopup="true"
-                onClick={this.handleClick}>
-                <MoreVertIcon />
-              </IconButton>
-            }
-            title={post.title}
-            subheader= {`Created by ${post.author} at ${new Date(post.timestamp).toLocaleString()}`}
-          />
-          <Menu
-            id='long-menu'
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={this.handleClose}
-          >
-            <MenuItem>
-              <Link to={`/${post.category}/${post.id}/edit`} key={post.id} >
-                Edit
-              </Link>
-            </MenuItem>
-            <MenuItem onClick={() => this.handlePostDelete(post.id)}>
-              Delete
-            </MenuItem>
-          </Menu>
+        {post.deleted === false?
+          <div>
+            <AddPostButton />
+            <Card className='post' key={post.id}>
+              <CardHeader
+                action={
+                  <IconButton aria-owns={anchorEl ? 'long-menu' : null} aria-haspopup="true"
+                    onClick={this.handleClick}>
+                    <MoreVertIcon />
+                  </IconButton>
+                }
+                title={post.title}
+                subheader= {`Created by ${post.author} at ${new Date(post.timestamp).toLocaleString()}`}
+              />
+              <Menu
+                id='long-menu'
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={this.handleClose}
+              >
+                <MenuItem>
+                  <Link to={`/${post.category}/${post.id}/edit`} key={post.id} >
+                    Edit
+                  </Link>
+                </MenuItem>
+                <MenuItem onClick={() => this.handlePostDelete(post.id)}>
+                  Delete
+                </MenuItem>
+              </Menu>
 
-          <CardContent>{ post.body }</CardContent>
-          <CardActions >
-            <VoteButton data={post}/>
-            <Badge badgeContent={post.commentCount} color='secondary' style={style}><Comment/></Badge>
-            <IconButton onClick={this.handleExpandClick}>
-              {!expanded ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-            </IconButton>
-          </CardActions>
+              <CardContent>{ post.body }</CardContent>
+              <CardActions >
+                <VoteButton data={post}/>
+                <Badge badgeContent={post.commentCount} color='secondary' style={style}><Comment/></Badge>
+                <IconButton onClick={this.handleExpandClick}>
+                  {!expanded ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+                </IconButton>
+              </CardActions>
 
-          <Collapse in={this.state.expanded} timeout='auto' unmountOnExit>
-            <CardContent>
-              <CommentList post={post}/>
-            </CardContent>
-          </Collapse>
-        </Card>
+              <Collapse in={this.state.expanded} timeout='auto' unmountOnExit>
+                <CardContent>
+                  <CommentList post={post}/>
+                </CardContent>
+              </Collapse>
+            </Card>
+          </div>
+        : <NotFound/>}
       </div>
     )
   }

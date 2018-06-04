@@ -55,8 +55,8 @@ export const addComment = (comment) => dispatch => {
   .then(comment => dispatch(postComment(comment)))
 }
 
-export const updateComment = (comment) => (dispatch) => {
-  api.updateComment(comment)
+export const updateComment = (id, body) => (dispatch) => {
+  api.updateComment(id, body)
   .then(comment => dispatch(editComment(comment)))
 }
 
